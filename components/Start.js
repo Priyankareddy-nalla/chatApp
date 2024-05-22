@@ -1,4 +1,5 @@
-import { StyleSheet, View, Text, Button, TextInput, ImageBackground, TouchableOpacity, Icon } from 'react-native';
+
+import { StyleSheet, View, Text, Button, TextInput, ImageBackground, TouchableOpacity, Platform, KeyboardAvoidingView } from 'react-native';
 import { useState } from 'react';
 
 const Start = ({ navigation }) => {
@@ -6,6 +7,7 @@ const Start = ({ navigation }) => {
   const [name, setName] = useState('');
   // State to store the selected background color
   const [selectedColor, setSelectedColor] = useState(null);
+  const colors = ['#090C08', '#474056', '#8A95A5', '#B9C6AE'];
 
   // Function to navigate to chat screen with name and background color
   const handleStartChatting = () => {
@@ -16,7 +18,6 @@ const Start = ({ navigation }) => {
   const handleColorChange = (color) => {
     setSelectedColor(color);
   };
-
 
   return (
     <View style={styles.container}>
@@ -36,22 +37,17 @@ const Start = ({ navigation }) => {
             <View style={styles.box}>
               <Text style={styles.backgroundColorText}>Choose background color</Text>
               <View style={styles.colorPicker}>
-                <TouchableOpacity
-                  style={[styles.colorOption, { backgroundColor: '#090C08' }]}
-                  onPress={() => handleColorChange('#090C08')}
-                />
-                <TouchableOpacity
-                  style={[styles.colorOption, { backgroundColor: '#474056' }]}
-                  onPress={() => handleColorChange('#474056')}
-                />
-                <TouchableOpacity
-                  style={[styles.colorOption, { backgroundColor: '#8A95A5' }]}
-                  onPress={() => handleColorChange('#8A95A5')}
-                />
-                <TouchableOpacity
-                  style={[styles.colorOption, { backgroundColor: '#B9C6AE' }]}
-                  onPress={() => handleColorChange('#B9C6AE')}
-                />
+                {colors.map((color, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={[styles.colorOption, { backgroundColor: color }]}
+                    onPress={() => handleColorChange(color)}
+                    accessible={true}
+                    accessibilityLabel={`Select ${color} color`}
+                    accessibilityHint={`Changes the background color to ${color}`}
+                    accessibilityRole="button"
+                  />
+                ))}
               </View>
               <TouchableOpacity
                 style={styles.startButton}
@@ -59,11 +55,14 @@ const Start = ({ navigation }) => {
               >
                 <Text style={styles.startButtonText}>Start Chatting</Text>
               </TouchableOpacity>
+              {Platform.OS === "ios" ? <KeyboardAvoidingView behavior="padding" /> : null}
             </View>
           </View>
         </View>
       </ImageBackground>
+
     </View>
+
   );
 };
 
@@ -140,5 +139,3 @@ const styles = StyleSheet.create({
 });
 
 export default Start;
-
-
