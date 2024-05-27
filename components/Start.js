@@ -1,22 +1,28 @@
-
-import { StyleSheet, View, Text, Button, TextInput, ImageBackground, TouchableOpacity, Platform, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, ImageBackground, TouchableOpacity, Platform, KeyboardAvoidingView, Alert } from 'react-native';
 import { useState } from 'react';
+import { getAuth, signInAnonymously } from 'firebase/auth';
 
 const Start = ({ navigation }) => {
-  // State to store the user's name
+  const auth = getAuth();
+
   const [name, setName] = useState('');
-  // State to store the selected background color
   const [selectedColor, setSelectedColor] = useState(null);
   const colors = ['#090C08', '#474056', '#8A95A5', '#B9C6AE'];
 
-  // Function to navigate to chat screen with name and background color
-  const handleStartChatting = () => {
-    navigation.navigate('Chat', { name: name, backgroundColor: selectedColor });
-  };
-
-  // Function to change chat screen background color
   const handleColorChange = (color) => {
     setSelectedColor(color);
+  };
+
+  // sign in user
+  const signInUser = () => {
+    signInAnonymously(auth)
+      .then(result => {
+        navigation.navigate('Chat', { name: name, backgroundColor: selectedColor, userID: result.user.uid });
+        Alert.alert('Signed in Successfully!');
+      })
+      .catch((error) => {
+        Alert.alert('Unable to sign in, try later again.');
+      });
   };
 
   return (
@@ -45,24 +51,21 @@ const Start = ({ navigation }) => {
                     accessible={true}
                     accessibilityLabel={`Select ${color} color`}
                     accessibilityHint={`Changes the background color to ${color}`}
-                    accessibilityRole="button"
+                    accessibilityRole='button'
                   />
                 ))}
               </View>
               <TouchableOpacity
                 style={styles.startButton}
-                onPress={handleStartChatting}
-              >
+                onPress={signInUser}>
                 <Text style={styles.startButtonText}>Start Chatting</Text>
               </TouchableOpacity>
-              {Platform.OS === "ios" ? <KeyboardAvoidingView behavior="padding" /> : null}
+              {Platform.OS === 'ios' ? <KeyboardAvoidingView behavior='padding' /> : null}
             </View>
           </View>
         </View>
       </ImageBackground>
-
     </View>
-
   );
 };
 
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 150,
-    color: 'white'
+    color: 'white',
   },
   changeDiv: {
     width: '90%',
