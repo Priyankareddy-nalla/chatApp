@@ -23,21 +23,12 @@ the versatility and efficiency of React Native to ensure a smooth and responsive
 npm install -g expo-cli
 
 # Libraries Installation
-1. Project Dependencies: 
-Install project dependencies using npm:
-npm install
-2. Expo Dependencies: 
-Install Expo dependencies:
-expo install @react-navigation/native
-3. Firebase Dependencies: 
-Install Firebase dependencies:
-expo install firebase
-4. Gifted Chat: 
-Install Gifted Chat library:
-npm install react-native-gifted-chat
-5. Audio Dependencies: 
-Install audio recording and playback dependencies:
-expo install expo-av
+Project Dependencies:
+* npm install
+* expo install @react-navigation/native
+* expo install firebase
+* npm install react-native-gifted-chat
+* expo install expo-av
 
 # Getting Started
 To get started with ChatApp, follow these steps:
@@ -46,11 +37,9 @@ To get started with ChatApp, follow these steps:
 3. Start the Expo development server: 
  expo start or npm start
 4. Follow the Expo CLI instructions to run the app on your preferred device/emulator.
-5. If run in vscode 
 
 # How to Use ChatApp
 Once the app is running on your device/emulator, follow these steps to use ChatApp:
-
 1. Enter Name and Choose Background Color:
 * Enter your name in the input field.
 * (Optional) Select your desired background color.
@@ -65,7 +54,7 @@ Once the app is running on your device/emulator, follow these steps to use ChatA
 * Click the "Send Location" button.
 * Your current location will be shared and displayed in a map view within the chat.
 5. Record and Send Audio:
-* Click the "Record Audio" button in the action sheet.
+* Click the "Record Audio" button.
 * Record your audio message and send it.
 6. Read Messages Offline:
 * Messages are stored locally.
